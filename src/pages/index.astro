@@ -1,0 +1,190 @@
+---
+import PageLayout from '../layouts/BaseLayout.astro'
+import Section from '../components/Section.astro'
+import Card from '../components/Card.astro'
+import ProjectCard from '../components/ProjectCard.astro'
+import Label from '../components/Label.astro'
+import SkillLayout from '../components/SkillLayout.astro'
+import PostPreview from '@/components/blog/PostPreview.astro'
+
+import { Image } from 'astro:assets'
+import me from "@/assets/me.jpg"
+import telegramIcon from '@/assets/icons/telegram.svg?url';
+import mailIcon from '@/assets/icons/mail.svg?url';
+
+import { getAllPosts, sortMDByDate } from '@/utils'
+import {Icon} from "astro-icon/components";
+
+
+const languages = ['Russian', 'English (pre-intermediate)']
+const technologies = ['Vue 2/3', 'Typescript', 'Rest API', 'GraphQL', 'Storybook', 'React', 'Next JS']
+
+const MAX_POSTS = 10
+const allPosts = await getAllPosts()
+const allPostsByDate = sortMDByDate(allPosts).slice(0, MAX_POSTS)
+
+
+---
+
+<PageLayout meta={{ title: 'Home' }}>
+	<div class='flex w-full flex-col gap-y-10'>
+		<section class='flex flex-col items-center gap-y-7'>
+			<Image
+				src={me}
+				alt='profile photo'
+				class='h-28 w-auto rounded-full bg-[#FFBE98] p-2'
+				loading='eager'
+			/>
+
+			<div class='flex flex-col items-center gap-y-4'>
+				<h1 class='text-3xl font-bold'>Попов Дмитрий</h1>
+
+				<div class='flex flex-wrap justify-center gap-x-5 gap-y-3'>
+					<Label
+						title='@dimadiimon'
+						as='a'
+						href='https://t.me/dimadiimon'
+						target='_blank'
+					>
+						<img slot='icon' src={telegramIcon} alt='Telegram Icon' class='h-5 w-5 text-foreground/75' />
+					</Label>
+					<Label
+						title='dnpopov@outlook.com'
+						as='a'
+						href='mailto:dnpopov@outlook.com'
+						target='_blank'
+					>
+						<img slot='icon' src={mailIcon} alt='Telegram Icon' class='h-5 w-5 text-foreground/75' />
+					</Label>
+				</div>
+			</div>
+		</section>
+
+		<Section title='Обо мне'>
+			<p class='text-muted-foreground'>
+				Привет! Я фронтенд разработчик с коммерческим опытом в 1.5 года и общим опытом в 3 года. Работал в продуктовых компаниях,
+				где занимался разработкой приложений с использованием vue 2/3. Умею делать расширения для браузеров на движке chromium.
+				Во время обучения работал с React, делал SSR приложения с помощью Next JS. В данный момент ищу работу.
+			</p>
+		</Section>
+		<!--{-->
+		<!--	allPostsByDate.length > 0 && (-->
+		<!--		<Section title='Посты'>-->
+		<!--			<ul class='flex flex-col gap-y-2'>-->
+		<!--				{allPostsByDate.map((p) => (-->
+		<!--					<li class='flex flex-col gap-x-2 sm:flex-row'>-->
+		<!--						<PostPreview post={p} />-->
+		<!--					</li>-->
+		<!--				))}-->
+		<!--			</ul>-->
+		<!--		</Section>-->
+		<!--	)-->
+		<!--}-->
+
+		<Section title='Опыт работы'>
+			<Card
+				heading='FLG'
+				subheading='Frontend разработчик'
+				date='Январь 2024 - Ноябрь 2024'
+				imageClass='h-12 w-auto md:-left-16'
+			>
+				<ul class='ml-4 list-disc text-muted-foreground'>
+					<li>Разработка библиотеки компонентов на vue3 с использованием storybook</li>
+					<li>Разработка расширения для chrome на vue3</li>
+					<li>Поддержка легаси проектов на vue2</li>
+				</ul>
+			</Card>
+			<Card
+				heading='Рулю'
+				subheading='Frontend разработчик'
+				date='Июль 2023 - Январь 2024'
+				imageClass='h-12 w-auto md:-left-16'
+			>
+				<ul class='ml-4 list-disc text-muted-foreground'>
+					<li>Разработка интерфейсов для админ панели на vue3, для мобильного приложения на vue2</li>
+					<li>Работа в команде с дизайнером, фронтенд и бэкенд разработчиками</li>
+					<li>Разработка новых компонентов, доработка уже имеющихся и работа с легаси кодом</li>
+					<li>Работа со swagger</li>
+					<li>Изучение основ бэкенда на node js</li>
+					<li>Разработка микросервиса на nest js и typescript</li>
+					<li>Разработка чатов с использованием Socket.io</li>
+					<li>Работа с картами, api benzuber</li>
+				</ul>
+			</Card>
+			<Card
+				heading='Обучение'
+				subheading='Frontend разработчик'
+				date='Январь 2022 - июнь 2023'
+				imageClass='h-12 w-auto md:-left-16'
+			>
+				<ul class='ml-4 list-disc text-muted-foreground'>
+					<li>Обучение и пет проекты</li>
+				</ul>
+			</Card>
+		</Section>
+
+		<!--<Section title='Образование'>-->
+		<!--	<Card-->
+		<!--		heading='Lorem Ipsum'-->
+		<!--		subheading='Sit amet consectetur'-->
+		<!--		date='Dec 2022 - Nov 2023'-->
+		<!--		imagePath='/src/assets/about-astro.png'-->
+		<!--		altText='Lorem, ipsum dolor sit'-->
+		<!--		imageClass='h-12 w-auto md:-left-16'-->
+		<!--	>-->
+		<!--		<ul class='ml-4 list-disc text-muted-foreground'>-->
+		<!--			<li>-->
+		<!--				Lorem, ipsum dolor sit amet consectetur adipisicing elit. Dolore debitis recusandae, ut-->
+		<!--				molestiae laboriosam pariatur!-->
+
+		<!--				<li>Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestiae, pariatur!</li>-->
+		<!--			</li>-->
+		<!--		</ul>-->
+		<!--	</Card>-->
+		<!--	<Card-->
+		<!--		heading='Lorem Ipsum'-->
+		<!--		subheading='Sit amet consectetur'-->
+		<!--		date='Dec 2022 - Nov 2023'-->
+		<!--		imagePath='/src/assets/about-astro.png'-->
+		<!--		altText='Lorem, ipsum dolor sit'-->
+		<!--		imageClass='h-12 w-auto md:-left-16'-->
+		<!--	/>-->
+		<!--</Section>-->
+
+		<Section title='Проекты'>
+			<div class='flex flex-col gap-y-3 sm:flex-row sm:gap-x-3 sm:gap-y-0'>
+				<ProjectCard
+					href="http://chat.dima-dev.ru"
+					heading='Чат'
+					subheading='Coming soon...'
+					imagePath='/src/assets/coming-soon.png'
+					altText='Lorem, ipsum dolor sit'
+					class='w-full sm:w-1/2'
+				/>
+				<ProjectCard
+					as='div'
+					heading='Virtual scroll'
+					subheading='Coming soon...'
+					imagePath='/src/assets/coming-soon.png'
+					altText='Lorem, ipsum dolor sit'
+					class='w-full sm:w-1/2'
+				/>
+
+				<ProjectCard
+					href='https://chromewebstore.google.com/detail/flg/dcfjmednflkgpadfgkdhphggnmmmodnb?hl=ru'
+					heading='Chrome расширение для поиска товаров на 1688'
+					subheading='В рамках работы в компании FLG'
+					imagePath='/src/assets/coming-soon.png'
+					altText='Example'
+					class='w-full sm:w-1/2'
+				/>
+			</div>
+		</Section>
+		<Section title='Технологии'>
+			<SkillLayout title='Языки' skills={languages} />
+			<SkillLayout title='Технологии' skills={technologies} />
+			<!--<SkillLayout title='Backend' skills={backend} />-->
+			<!--<SkillLayout title='Others' skills={others} />-->
+		</Section>
+	</div>
+</PageLayout>
