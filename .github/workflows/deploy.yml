@@ -31,3 +31,4 @@ jobs:
             cd frontend
             npm install
             npm run build
+            pm2 reload resume || pm2 start dist/server/entry.mjs --name resume
