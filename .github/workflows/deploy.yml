@@ -21,7 +21,7 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: ${{ secrets.SSH_PORT }}
           script: |
-            cd /var/www/resume
+            cd /var/www/projects
             if [ ! -d "resume" ]; then
               git clone https://github.com/hamedor/resume.git frontend
             else
