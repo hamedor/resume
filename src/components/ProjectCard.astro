@@ -2,6 +2,8 @@
 import { Image } from 'astro:assets'
 import type { ImageMetadata } from 'astro'
 import { cn } from '@/utils'
+import Label from "./Label.astro";
+import githubIcon from '@/assets/icons/github.svg?url';
 
 const {
 	as: Tag = 'a',
@@ -10,7 +12,9 @@ const {
 	heading,
 	subheading,
 	imagePath,
-	altText
+	altText,
+	showIcon = true,
+	iconLink
 } = Astro.props
 const images = import.meta.glob<{ default: ImageMetadata }>('/src/assets/*.{jpeg,jpg,png,gif}')
 if (!images[imagePath])
@@ -20,12 +24,24 @@ if (!images[imagePath])
 <Tag
 	class={cn(
 		className,
-		'flex flex-col gap-y-3 rounded-2xl border border-border bg-primary-foreground ',
+		'relative group flex flex-col gap-y-3 rounded-2xl border border-border bg-primary-foreground',
 		href && 'transition-all hover:border-foreground/25 hover:shadow-sm'
 	)}
 	href={href}
 	target="_blank"
 >
+	{/* Условное отображение иконки с обработчиком клика */}
+	{showIcon && (
+		<div
+			class="absolute top-2 right-2 opacity-0 transition-opacity duration-300 group-hover:opacity-100 bg-white bg-opacity-75 rounded-full p-1 shadow-md cursor-pointer"
+			onclick={`event.stopPropagation(); window.open('${iconLink}', '_blank');`}
+			role="button"
+			aria-label="Перейти по ссылке"
+		>
+			<img src={githubIcon} alt='GitHub Icon' class='h-5 w-5 text-foreground/75' />
+		</div>
+	)}
+
 	<Image
 		src={images[imagePath]()}
 		alt={altText}
@@ -33,7 +49,7 @@ if (!images[imagePath])
 		loading='eager'
 	/>
 	<div class='flex flex-col gap-y-0.5 px-2 py-1'>
-		<h1 class='font-medium '>{heading}</h1>
+		<h1 class='font-medium'>{heading}</h1>
 		<h2 class='text-muted-foreground'>{subheading}</h2>
 	</div>
 
